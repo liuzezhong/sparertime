@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="zh"><head><title>简聊前端中的 React.js - Teambition</title><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="keywords" content="团队协作工具,团队管理工具,项目管理工具,项目协作工具,任务分配,任务进度,文件存储,文件共享,在线预览,知识管理,日程管理,项目管理,项目讨论,项目沟通"><meta name="description" content="Teambition 是一个简单，高效的项目协作工具，你可以在这里管理项目，跟踪任务进度，存储项目文件，让你的团队协作更高效。"><meta property="og:description" content="用这篇文章梳理一下, 目前简聊在 React 方面的进展, 以及有待研究的方面."><meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"><meta name="apple-itunes-app" content="app-id=656664814"/><link rel="alternate" href="../../../site/404.html" hreflang="x-default" /><link rel="shortcut icon" href="../../../favicon.ico"><link rel="stylesheet" href="https://dn-st.teambition.net/site/v2.0.0/css/lib.fc2b25bd.css"><link rel="stylesheet" href="https://dn-st.teambition.net/site/v2.0.0/css/app.f8bcf230.css"></head><body class="page-developer-article tbsite-article zh"><header class="site-header "><div class="container"><nav class="navbar" role="navigation"><div class="navbar-header"><button class="btn btn-primary navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">菜单</button><a class="navbar-brand" href="../../index.html" data-gta="event" data-category="out-top-nav" data-action="tb logo">Teambition・最好用的团队协作工具</a></div><div class="collapse navbar-collapse"><div class="items-wrap"><ul class="navbar-button list-inline"><li class="switch-locale-wrap"><div class="dropdown switch-locale"><a class="dropdown-toggle zh">中文版</a><ul class="dropdown-menu" role="menu" aria-labelledby="dLabel"><li><a href="../../../tw/developer/blog/article-_id=554c5296a37ffe95660eb0c0.html" class="tw">繁體版</a></li><li><a href="../../../en/developer/blog/article-_id=554c5296a37ffe95660eb0c0.html" class="en">English</a></li><li><a href="../../../ko/developer/blog/article-_id=554c5296a37ffe95660eb0c0.html" class="ko">한국어</a></li></ul></div></li><li><a class="btn btn-default btn-sm login" href="https://account.teambition.com/login" data-gta="event" data-category="out-top-nav" data-action="login">登录</a></li><li><a class="btn btn-default btn-sm signup" href="https://account.teambition.com/signup?from=nav" data-gta="event" data-category="out-top-nav" data-action="signup">免费注册</a></li></ul><ul class="nav navbar-nav"><li ><a href="../../tour.html" data-gta="event" data-category="out-top-nav" data-action="tour">功能</a></li><li ><a href="../../pricing.html" data-gta="event" data-category="out-top-nav" data-action="prices">价格</a></li><li ><a href="../../apps.html" data-gta="event" data-category="out-top-nav" data-action="apps">下载</a></li><li><a href="https://bbs.teambition.com" data-gta="event" data-category="out-top-nav" data-action="community">社区</a></li><li><a href="https://blog.teambition.com/zh" data-gta="event" data-category="out-top-nav" data-action="blog">博客</a></li></ul></div></div></nav></div></header><div class="site-main"><div class="article-content"><div class="topbanner not-image"  style="background-color: #494949;"><div class="bg-mask"><div class="container max1010"><div class="return"><a href="../blog.html"><span class="icon icon-chevron-left"></span>返回 创作随笔</a></div><h1 class="title">简聊前端中的 React.js</h1></div></div></div><div class="main-content readable"><div class="container max730"><p>太早的事情需要看微博和 Git commits 记录才能知道了. 去年一月份我接触到过 React, 当时我关注的技术是 Ractive. 也是我快要到 Teambition 的时间, 简聊(<a href="http://talk.ai/">http://talk.ai/</a>)也刚好是那时候开始的. 后来我关注的技术是 Vue, 直到 5 月份开始转投 React, 因为语法障碍克服了. 大致也就是现在简聊用 CoffeeScript 写 React 的原因. 用了 10 月中旬侧边栏引入了 React, 今年 1 月中旬去掉了 Backbone 依赖.</p>
+<p>用这篇文章梳理一下, 目前简聊在 React 方面的进展, 以及有待研究的方面.</p>
+<h3 id="-">简述, 进展, 方向</h3>
+<ul>
+<li>进展</li>
+</ul>
+<p>React 在 Teambition 的使用范围限制在简聊这个单页面应用之内. 目前应用本身对 jQuery 依赖已经移除, DOM 操作也在之前全从 jQuery 迁移. 简聊代码中创建了 20 个左右公用组件, 大约 120 个其他的组件.</p>
+<p>部分较通用的代码, 计划拆分为模块在 GitHub 托管, 以及进行后续维护, 实际感受单页面的组件绑定业务逻辑会比较多, 因此通用性也有折扣.</p>
+<p><a href="https://github.com/teambition/react-lite-dropdown">https://github.com/teambition/react-lite-dropdown</a></p>
+<p><a href="https://github.com/teambition/react-lite-layered">https://github.com/teambition/react-lite-layered</a></p>
+<p><a href="https://github.com/teambition/react-lite-uploader">https://github.com/teambition/react-lite-uploader</a> (试验性)</p>
+<p><a href="https://github.com/teambition/react-lite-misc">https://github.com/teambition/react-lite-misc</a></p>
+<p>此前简聊代码使用的是 Backbone, 因此上面的对比基于 Backbone. 组件化, 界面的可维护性, 路由, DOM 操作的效率, 都提升得很好. 比如消息流之前加载很慢, 但是改成 React 之间自动合并了批量操作, 性能提升很明显. View 部分是我们投入时间较多的部分, 功能也抓得比较紧. React 对组件化的帮助非常大, 拆分模块非常方便, 因此简聊模块才特别多. 我也努力在让组件的通用性变得更强, 效果相对此前的 Backbone 也算满意. 另外 react-router 也很好得满足了我们的需要</p>
+<p>我个人认为 jQuery 对 MVC 存在误导, 建议尽量避免手动的 DOM 操作. Angular 跟 React 都是在 DOM 操作层面建立起更高级的抽象, 这个区别类似汇编语言的 goto label 结构跟高级语言的 for while 甚至 map reduce 方法的区别, 也就是对低级操作的细节进行封装.</p>
+<ul>
+<li>需要跟进</li>
+</ul>
+<p>React 的数据层方案不够成熟, 实际上目前我们的数据层也极为简单. 仅仅是 JSON 保存的数据, 参考官方 Flux 写的简单的 store. 面临的问题是性能优化不够, 稳健性也没有好的方案保证. 初步想法是引入 <code>immutable-js</code>, 目前只是局部模块使用, 还需要改进. 而且 Flux 的问题需要更多的经验深入考虑一下才行, 比较重要. 相对 Backone 来说, 方案更灵活, 但业务逻辑相对不够清晰, 各有利弊.</p>
+<p>服务端渲染对前端来说, 主要页面初次加载复杂的 API 请求逻辑不够清晰. 其次是加载速度.. 不过加载速度是服务端渲染一做马上就能改观的事情. 除了初次加载问题, 切换路由时的数据加载, 也是前后端共用代码的难点. React 提供了机会可以尝试 Isomorphic JavaScript 应用, 深入到数据路由界面全部代码共用. 目前还在收集资料阶段, 没有深入研究, 理想的目标是能帮助到公司其他的页面构建.</p>
+<p>React 当中跨组件共享状态有难点, 而且排斥使用全局事件干扰数据流. 我相信这种限制是代码稳定可靠的一个手段, 但也会增加开发的难度. 有时我在设想能否借鉴 Om 之类方案, 用全局数据更好地管理状态? 因为在逻辑当中存在的多样的状态交换, 实在是需要想办法支持的. 这个方面没有很清晰的进展, 需要投入时间去摸索.</p>
+<hr/>
+<h3 id="-">类库使用</h3>
+<p>目前开发环境代码优化后体积超过 1M, 采用 Webpack 进行了分包:</p>
+<pre><code>480K  js/main.59ad3c68fa5199b1268f.js
+812K  js/vendor.7127c2f31156396dd4e9.js
+172K  css/main.59ad3c68fa5199b1268f.css
+</code></pre><p>具体到类库方面首先是框架功能上必需的一些:</p>
+<ul>
+<li>react(132k)</li>
+<li>flux</li>
+<li>moment(36k)</li>
+<li>emojitfy.js</li>
+<li>xss</li>
+<li>favico.js</li>
+<li>react-router</li>
+<li>sockjs-client</li>
+<li>spiderjs</li>
+</ul>
+<h4 id="-">大模块:</h4>
+<ul>
+<li>jquery(计划弃用) 84k</li>
+<li>webuploader 71k(html5 52k)</li>
+<li><a href="https://github.com/mailru/FileAPI">https://github.com/mailru/FileAPI</a> 43k(html5 34k)</li>
+<li><a href="https://code.teambition.com/project/highlightjs/tree/master">https://code.teambition.com/project/highlightjs/tree/master</a></li>
+<li>immutablejs <a href="https://github.com/facebook/immutable-js">https://github.com/facebook/immutable-js</a> 56k</li>
+<li>lodash 50k</li>
+</ul>
+<h4 id="-">小模块:</h4>
+<p>全局事件 <a href="https://github.com/Wolfy87/EventEmitter">https://github.com/Wolfy87/EventEmitter</a></p>
+<p>selection 处理 <a href="https://github.com/timdown/rangy/">https://github.com/timdown/rangy/</a></p>
+<p>Ajax 请求 <a href="https://github.com/ded/Reqwest">https://github.com/ded/Reqwest</a></p>
+<p>className 拼接 <a href="https://github.com/JedWatson/classnames">https://github.com/JedWatson/classnames</a></p>
+<p>浏览器检测 <a href="https://github.com/ded/bowser">https://github.com/ded/bowser</a></p>
+<p>文件大小格式化 <a href="https://github.com/avoidwork/filesize.js">https://github.com/avoidwork/filesize.js</a></p>
+<p>pen <a href="https://github.com/teambition/pen">https://github.com/teambition/pen</a></p>
+<p>pdfobject <a href="https://github.com/teambition/PDFObject">https://github.com/teambition/PDFObject</a></p>
+<p>thenjs <a href="https://github.com/teambition/then.js/">https://github.com/teambition/then.js/</a> 4.4k</p>
+<h4 id="css-">CSS 模块</h4>
+<p>CSS 部分一个是图标字体的使用, 目前在公司统一的 UI 库当中. 也有 Bootstrap 的依赖, 而我一直在尝试弱化 Bootstrap 的部分. 目前只是部分引入, 希望以后有机会去除绝大部分 Bootstrap CSS. Flexbox 是近期引入的, 为了提升代码质量开发效率, 放松兼容性, 有利有弊.</p>
+<ul>
+<li>tb-ui</li>
+<li>Bootstrap</li>
+<li>flex.less(Flexbox LESS mixin)</li>
+</ul>
+<hr/>
+<h3 id="-">前端技术</h3>
+<h4 id="react-">React 部分</h4>
+<p>简聊整体建立在 React 跟 Webpack 上, 开发过程中一些资料放到了 SF. 这些我在社区交流比较多, 如果我们有更多时间整理技术, 会多做些交流. 因为我采用 CoffeeScript 书写 JSX, 跟社区很多可能理解有差别.</p>
+<ul>
+<li>React <a href="http://segmentfault.com/t/reactjs/blogs?page=2">http://segmentfault.com/t/reactjs/blogs?page=2</a></li>
+<li>Webpack <a href="http://segmentfault.com/t/webpack/blogs">http://segmentfault.com/t/webpack/blogs</a></li>
+</ul>
+<p>React-Hot-Replace 支持的热替换相比整页刷新方便了很多, 但也存在不足. 项目代码太多, 代码保存 2s 左右页面才能完成更新, 调试样式实时性不够, 甚至上线编译整个项目的时间也超过 40s. js 报错的情况下, 依然需要手动刷新页面. 某些文件更改会导致页面整个刷新. 编译代码经过文件合并, 不如独立文件调试来得方便.</p>
+<h4 id="css">CSS</h4>
+<p>样式代码采用 LESS 为主, 我希望部分代码还是以 CSS 存在, 比如组件可以方面其他项目复用. 具体样式都参考 SMACSS 来进行规划, 效果比较好:</p>
+<ul>
+<li>SMACSS <a href="https://smacss.com/">https://smacss.com/</a></li>
+</ul>
+<p>另外随着 Flexbox 使用, 界面的结构化和代码的组件化会更轻松一些. 不过这个不是短期能搞定的, 而且具体兼容性还要花时间对付一下.</p>
+<p>CSS 继承的问题是老大难, 非常难办, 继承完全不够在编写应用当中使用. CSS 选择器极容易穿透组件作用到内层嵌套的组件当中. 单页面应用当中大量嵌套组件是非常常见的,  所以这明确是 CSS 的问题. 原本 CSS 本身不应该作为重点来应对, 但技术太不照顾单页面的场景了. Web Components 普及之前似乎没有非常好的办法.</p>
+<h4 id="mv-">MV*</h4>
+<p>前端 MV* 模型的问题上, 基本上是 Flux, 而且还需要深入探索. 由于从 Backbone 转过来, 实际上代码用了大量的 listenTo 类似的实现. 嵌套太深, 于是内部的组件直接监听 store, 也显示出来 flux 在这方面不够强大. 我们没有采用第三方的管理 Store 或者 State 的类库, 而是官方基于 Demo 的手法改的:</p>
+<ul>
+<li>Flux <a href="https://github.com/facebook/flux/tree/master/examples/flux-chat/js">https://github.com/facebook/flux/tree/master/examples/flux-chat/js</a></li>
+</ul>
+<p>Flux 同时要考虑的还有上边说的 Isomorphic JavaScript 的问题. 我很认同 JavaScript 未来的方向, 借用一下 AirBnB 以前的一个图:</p>
+<p><a href="http://www.slideshare.net/spikebrehm/a-28174727?from_action=save">http://www.slideshare.net/spikebrehm/a-28174727?from_action=save</a>
+<img src="http://ww2.sinaimg.cn/large/62752320gw1erjxl5pq5pj20hp0dc0uf.jpg" alt=""/></p>
+<p>补充下这张图, 因为我们是全栈 JavaScript, 所以具体场景会有些区别. 这同时要求有更清晰的对于前后端数据同步等等的认识.. 有待探索.</p>
+<h3 id="-">招聘</h3>
+<p>Teambition 的应用目前都在单页面上走得挺远, 需要研究的技术问题也增多. 期待更多同学加入推进这些方面问题的解决, 具体看<a href="https://github.com/teambition/hire">仓库上</a>.</p>
+<p>另外我们建立了一个 <a href="https://github.com/teambition/webapp-solutions">repo 叫做 webapp-solutions</a> 计划在上边梳理一些我们遇到的问题以及解决方案, 不会是以 React 为主, 但是计划在其中放一些 React 相关的解决方案, 希望大家参与.</p>
+</div></div><div class="article-toolbar text-center"><div class="share-button-group"><a href="http://service.weibo.com/share/share.php?ralateUid=2673498793&amp;url=https://www.teambition.com/developer/blog/article%3F_id=554c5296a37ffe95660eb0c0%26p=weibo-share&amp;title=%E3%80%90%E7%AE%80%E8%81%8A%E5%89%8D%E7%AB%AF%E4%B8%AD%E7%9A%84%20React.js%E3%80%91%E7%94%A8%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0%E6%A2%B3%E7%90%86%E4%B8%80%E4%B8%8B,%20%E7%9B%AE%E5%89%8D%E7%AE%80%E8%81%8A%E5%9C%A8%20React%20%E6%96%B9%E9%9D%A2%E7%9A%84%E8%BF%9B%E5%B1%95,%20%E4%BB%A5%E5%8F%8A%E6%9C%89%E5%BE%85%E7%A0%94%E7%A9%B6%E7%9A%84%E6%96%B9%E9%9D%A2.&amp;pic=" target="_blank" title="分享到微博" class="btn weibo"><span class="icon icon-weibo"></span></a><a data-toggle="modal" data-target="#modalWechat" title="分享到微信朋友圈" class="btn wechat"><span class="icon icon-wechat"></span></a><a href="https://twitter.com/intent/tweet?text=%E7%AE%80%E8%81%8A%E5%89%8D%E7%AB%AF%E4%B8%AD%E7%9A%84%20React.js%20https://www.teambition.com/developer/blog/article%3F_id=554c5296a37ffe95660eb0c0%26p=twitter-share" target="_blank" title="分享到 Twitter" class="btn twitter"><span class="icon icon-twitter"></span></a><a href="http://www.facebook.com/sharer.php?u=https://www.teambition.com/developer/blog/article%3F_id=554c5296a37ffe95660eb0c0%26p=facebook-share&amp;t=%E7%AE%80%E8%81%8A%E5%89%8D%E7%AB%AF%E4%B8%AD%E7%9A%84%20React.js" target="_blank" title="分享到 Facebook" class="btn facebook"><span class="icon icon-facebook"></span></a></div></div><div class="tbsite-post-info"><div class="container max730"><div class="infobar clearfix"><span class="author"><span class="avatar img-circle" style="background-image:url('https://dn-site.oss.aliyuncs.com/2014-10/47254328e780164c6c272830ec8d0060b49d0f0f')" ></span><span class="username">陈涌</span></span><span class="time">2015-05-08</span></div></div></div><div class="switch-nav"><div class="container max730"><div class="clearfix"><a href="../blog.html" class="gray prev"><span class="icon icon-chevron-left"></span>返回 创作随笔</a></div></div></div></div><div class="modal fade modal-wechat" id="modalWechat" tabindex="-1" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span>&times;</span></button><h4 class="modal-title" id="myModalLabel">分享到微信朋友圈</h4></div><div class="modal-body"><div class="qrcode" data-src="https://www.teambition.com/developer/blog/article?_id=554c5296a37ffe95660eb0c0&p=wechat-share" data-desc="用这篇文章梳理一下, 目前简聊在 React 方面的进展, 以及有待研究的方面."></div></div></div></div></div></div><footer class="site-footer hack-webkit-render"><div class="container max1010"><div class="row footer-nav"><div class="col-md-12 clearfix"><ul class="nav-group"><h4>产品</h4><li><a href="../../tour.html" data-gta="event" data-category="out-footer" data-action="product overview">产品概览</a></li><li><a href="../../pricing.html" data-gta="event" data-category="out-footer" data-action="prices">价格</a></li><li><a href="../../apps.html" data-gta="event" data-category="out-footer" data-action="apps">下载</a></li><li><a href="https://bbs.teambition.com" data-gta="event" data-category="out-footer" data-action="community">社区</a></li><li><a href="https://blog.teambition.com/zh/updates" target="_blank" data-gta="event" data-category="out-footer" data-action="updates">最近更新</a></li><li><a href="../../privacy.html" data-gta="event" data-category="out-footer" data-action="privacy">隐私条款</a></li></ul><ul class="nav-group"><h4>公司</h4><li><a href="https://blog.teambition.com/zh/activities" target="_blank" data-gta="event" data-category="out-footer" data-action="news and events">新闻与活动</a></li><li><a href="../../info/team.html" data-gta="event" data-category="out-footer" data-action="team members">团队成员</a></li><li><a href="../../careers.html" target="_blank" data-gta="event" data-category="out-footer" data-action="join us">加入我们</a></li><li><a href="../../info/press.html" data-gta="event" data-category="out-footer" data-action="press release">媒体报道</a></li><li><a href="../../info/partners.html" data-gta="event" data-category="out-footer" data-action="partners">合作伙伴</a></li><li><a href="../../csr.html" data-gta="event" data-category="out-footer" data-action="CSR">公益计划</a></li></ul><ul class="nav-group"><h4>案例</h4><li><a href="../../research/cases.html" data-gta="event" data-category="out-footer" data-action="industry cases">行业案例</a></li><li><a href="../../research/cases/index.html#practices" data-gta="event" data-category="out-footer" data-action="best practice">专题用例</a></li></ul><ul class="nav-group"><h4>开发者</h4><li><a href="../open-source.html" data-gta="event" data-category="out-footer" data-action="open source">开源项目</a></li><li><a href="../open-platform.html" data-gta="event" data-category="out-footer" data-action="developer open-platform">开放平台</a></li><li><a href="../blog.html" data-gta="event" data-category="out-footer" data-action="developer blog">创作随笔</a></li><li><a href="https://help.teambition.com/" data-gta="event" data-category="out-footer" data-action="developer self-test">自助检测</a></li><li><a href="http://status.teambition.net/" data-gta="event" data-category="out-footer" data-action="developer system-status">系统状态</a></li></ul><ul class="nav-group"><h4>联系方式</h4><li><a href="tel:00864000605576">+86 400-060-5576</a><span class="small">周一至周日 8:00 ~ 20:00</span></li><li><a href="mailto:support@teambition.com" data-gta="event" data-category="out-footer" data-action="contact send support email">support@teambition.com</a></li><li><a href="../../info/contactus.html" data-gta="event" data-category="out-footer" data-action="contact us">联系我们</a></li></ul></div></div></div><div class="copyright"><div class="container max1010"><div class="copyandlang text">Copyright © 2013-2016 Teambition<span class="small"><a href="http://www.miitbeian.gov.cn/">沪ICP备11014111号-2</a></span></div><div class="sns-info"><a class="icon icon-wechat"><div class="pop"><label>微信客服</label><p>请扫描二维码</p><div class="qr-wrapper"></div></div></a><a class="icon icon-weibo" href="http://weibo.com/teambition" target="_blank"></a><a class="icon icon-qq"><div class="pop"><label>官方 QQ 群</label><p>群5：475953451</p><p>群6：143032683 (浙江)</p></div></a><a class="icon icon-rss" href="../../../rss.rss" target="_blank"></a><a class="icon icon-dribbble" href="https://dribbble.com/teambition" target="_blank"></a></div></div></div></footer><script id="gta-main" data-google="UA-41231871-1"data-baidu="ec912ecc405ccd050e4cdf452ef4e85a"data-growingio="1b90a59aaa8e4330afbfd547567aa588"></script><script id="global-config" data-env="release"></script><script src="https://dn-st.teambition.net/site/v2.0.0/js/lib.4ec1082b.js"></script><script src="https://dn-st.teambition.net/site/v2.0.0/js/app.00683573.js"></script></body></html>
