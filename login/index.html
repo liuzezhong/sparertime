@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>登录 - Timerr 账户</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, width=device-width, minimal-ui">
+<link rel="shortcut icon" href="data:image/png;base64,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" type="image/png">
+<link rel="stylesheet" href="css/lib.css"/>
+<link rel="stylesheet" href="css/app.css"/>
+
+  </head>
+  <body class="login">
+    <section class="content">
+      <div class="topbanner">
+  <div class="poswrap">
+    <a class="brand" href="http://www.teambition.com/" ><h1>Teambition</h1></a>
+  </div>
+</div>
+
+      
+      <div class="form-unit">
+        
+        
+        <form method="post" action="" class="auth-form form-horizontal tb-auth">
+          <div class="validation"></div>
+          <input type="hidden" name="phone" value="">
+          
+            <div class="form-field">
+              <input type="text" placeholder="邮箱/手机号"
+              name="email" value="" class="form-control email" required />
+            </div>
+            <div class="form-field">
+              <input type="password" placeholder="密码" name="password" class="form-control password" value="" required />
+            </div>
+            
+            <button type="submit" class="btn btn-primary anim-blue-all" data-gta="event" data-label="login-direct">
+              登录<span class="icon icon-upload"></span>
+            </button>
+            
+            <div class="third-auth">
+              <a href="#" class="btn btn-primary wechat">
+                <span class="icon icon-wechat"></span>
+                <span class="text">使用 微信 登录</span>
+              </a>
+            </div>
+            
+            <div class="horizontal-line"></div>
+            <div class="tb-auth">
+              
+                <a href="/signup?" class="btn btn-primary anim-blue">还没有账号？免费注册<span class="icon icon-upload"></span></a>
+              
+                <a href="/forgot" class="btn btn-primary others anim-grey forget">忘记密码？重置<span class="icon icon-upload"></span></a>
+              
+                <a href="#" class="btn btn-primary others anim-grey">使用第三方账号登录<span class="icon icon-upload"></span></a>
+              
+            </div>
+          
+        </form>
+      </div>
+    </section>
+    <script id="locale"
+  signup="注 册"
+  login="登录"
+  connect="绑定"
+  next="下一步"
+  yourpassword="密码"
+  passwordplaceholder="密码（字母，数字，至少6位）"
+  registeredmobile="该手机号已注册，请直接 %s"
+  verifiedmobile="手机号 %s 验证成功"
+  completeaccount="请完善您的账号信息，您也可以 %s"
+  createnewone="创建新账号"
+  sendsmsagain="重新获取(%s)"
+  resend="重新获取"
+  invalidemailormobile="请输入正确的邮箱或手机号码"
+  unregisteredmobile="该手机号还未绑定，请使用邮箱登录，或 %s"
+  invalidmobile="请输入正确的手机号码!"
+  invalidcountrycode="请输入正确的国家码!"
+  connectaccount="请输入现有邮箱和密码来进行绑定，您也可以 %s"
+  connectit="绑定现有账号"
+  createnewone="创建新账号"
+  privacyerror="请接受隐私条款"
+  china="中国"
+  hongkong="中国香港"
+  taiwan="台湾"
+  japan="日本"
+  unitedstates="美国"
+  other="其他"
+  captchaTitle="获取短信验证码前，请先点击下图中的 %s"
+  captchaInvalided="图片验证失败"
+  captchaTips="请先选择图片验证码"
+  captchaValided="图片验证成功"
+  captchaValidedFreq="图片验证码错误次数过多, 请明天再试"
+  captchaRefresh="刷新图片验证码"
+  captchaSetupErr="获取图片验证码频繁, 请明天再试"
+></script>
+
+    <script id="gta-main"
+  data-baidu="ec912ecc405ccd050e4cdf452ef4e85a"
+  data-google="UA-41231871-1"
+  data-mixpanel="50a734e210e0719fb5a5c36da6c26e03"
+  data-customer="04cfe7c1f3b46254c6f6,a34ce87933cc7d880b6c"
+  data-fullstory="M776"
+  data-fullstory-random-proportion="0.03333"></script>
+<script src="js/lib.js"></script>
+<script src="js/app.js"></script>
+
+  </body>
+</html>
+

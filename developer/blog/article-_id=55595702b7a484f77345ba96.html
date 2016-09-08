@@ -1,0 +1,190 @@
+<!DOCTYPE html><html lang="zh"><head><title>Todomvc with ES6 and jspm - Teambition</title><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="keywords" content="团队协作工具,团队管理工具,项目管理工具,项目协作工具,任务分配,任务进度,文件存储,文件共享,在线预览,知识管理,日程管理,项目管理,项目讨论,项目沟通"><meta name="description" content="Teambition 是一个简单，高效的项目协作工具，你可以在这里管理项目，跟踪任务进度，存储项目文件，让你的团队协作更高效。"><meta property="og:description" content="jspm 是一个包管理器，使用 SystemJS 这个模块加载器进行模块的管理。SystemJS 是一个所谓 universal module loader，基于 ES6 module loader，除了能加载 ES6 模块，还支持 CommonJS，AMD 及 globals 语法。"><meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"><meta name="apple-itunes-app" content="app-id=656664814"/><link rel="alternate" href="../../../site/404.html" hreflang="x-default" /><link rel="shortcut icon" href="../../../favicon.ico"><link rel="stylesheet" href="https://dn-st.teambition.net/site/v2.0.0/css/lib.fc2b25bd.css"><link rel="stylesheet" href="https://dn-st.teambition.net/site/v2.0.0/css/app.f8bcf230.css"></head><body class="page-developer-article tbsite-article zh"><header class="site-header "><div class="container"><nav class="navbar" role="navigation"><div class="navbar-header"><button class="btn btn-primary navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">菜单</button><a class="navbar-brand" href="../../index.html" data-gta="event" data-category="out-top-nav" data-action="tb logo">Teambition・最好用的团队协作工具</a></div><div class="collapse navbar-collapse"><div class="items-wrap"><ul class="navbar-button list-inline"><li class="switch-locale-wrap"><div class="dropdown switch-locale"><a class="dropdown-toggle zh">中文版</a><ul class="dropdown-menu" role="menu" aria-labelledby="dLabel"><li><a href="../../../tw/developer/blog/article-_id=55595702b7a484f77345ba96.html" class="tw">繁體版</a></li><li><a href="../../../en/developer/blog/article-_id=55595702b7a484f77345ba96.html" class="en">English</a></li><li><a href="../../../ko/developer/blog/article-_id=55595702b7a484f77345ba96.html" class="ko">한국어</a></li></ul></div></li><li><a class="btn btn-default btn-sm login" href="https://account.teambition.com/login" data-gta="event" data-category="out-top-nav" data-action="login">登录</a></li><li><a class="btn btn-default btn-sm signup" href="https://account.teambition.com/signup?from=nav" data-gta="event" data-category="out-top-nav" data-action="signup">免费注册</a></li></ul><ul class="nav navbar-nav"><li ><a href="../../tour.html" data-gta="event" data-category="out-top-nav" data-action="tour">功能</a></li><li ><a href="../../pricing.html" data-gta="event" data-category="out-top-nav" data-action="prices">价格</a></li><li ><a href="../../apps.html" data-gta="event" data-category="out-top-nav" data-action="apps">下载</a></li><li><a href="https://bbs.teambition.com" data-gta="event" data-category="out-top-nav" data-action="community">社区</a></li><li><a href="https://blog.teambition.com/zh" data-gta="event" data-category="out-top-nav" data-action="blog">博客</a></li></ul></div></div></nav></div></header><div class="site-main"><div class="article-content"><div class="topbanner not-image"  style="background-color: #494949;"><div class="bg-mask"><div class="container max1010"><div class="return"><a href="../blog.html"><span class="icon icon-chevron-left"></span>返回 创作随笔</a></div><h1 class="title">Todomvc with ES6 and jspm</h1></div></div></div><div class="main-content readable"><div class="container max730"><h1 id="todomvc-with-es6-and-jspm">Todomvc with ES6 and jspm</h1>
+<p><a href="http://jspm.io/">jspm</a> 是一个包管理器，使用 <a href="https://github.com/systemjs/systemjs">SystemJS</a> 这个模块加载器进行模块的管理。SystemJS 是一个所谓 <code>universal module loader</code>，基于 <a href="https://github.com/ModuleLoader/es6-module-loader">ES6 module loader</a>，除了能加载 ES6 模块，还支持 CommonJS，AMD 及 globals 语法。</p>
+<h3 id="1-how-jspm-load-modules">1. How jspm load modules</h3>
+<p>jspm 通过 <a href="https://github.com/jspm/registry">registry</a> 加载模块，它其实没有自己的仓库，目前只能加载 <code>npm</code> 和 <code>github</code> 上的模块，当然也可以自己通过它的 <code>registry</code> 机制「注册」一些模块之后使用。</p>
+<!-- more -->
+
+<p>jspm 要解决的就是浏览器端模块加载的问题，通过它前端代码可以无缝地使用 <code>npm</code> 和 <code>github</code> 上的大量模块，只需 <code>jspm install example</code>，然后在代码中 <code>import example from &quot;example&quot;</code>（ES6 语法） 就行了，SystemJS 会帮我们在浏览器加载 <code>example</code>，而且是异步的。</p>
+<h3 id="1-1-install-jspm">1.1 Install jspm</h3>
+<h5 id="1-1-1-install-jspm-cli-">1.1.1 Install jspm CLI：</h5>
+<pre><code class="lang-bash">$ npm install jspm/jspm-cli -g
+</code></pre>
+<h5 id="1-1-2-install-local-jspm-">1.1.2 Install local jspm：</h5>
+<pre><code class="lang-bash">$ cd my-project
+$ npm install jspm --save-dev
+</code></pre>
+<h3 id="1-2-create-a-project-and-setup">1.2 Create a project and setup</h3>
+<p>初始化一个 jspm 项目使用 <code>jspm init</code> 命令。</p>
+<pre><code class="lang-bash">$ jspm init
+Package.json file does not exist, create it? [yes]: 
+Would you like jspm to prefix the jspm package.json properties under jspm? [yes]: 
+Enter server baseURL (public folder path) [.]: 
+Enter jspm packages folder [./jspm_packages]: 
+Enter config file path [./config.js]: 
+Configuration file config.js doesn&#39;t exist, create it? [yes]:
+Enter client baseURL (public folder URL) [/]: 
+Which ES6 transpiler would you like to use, Traceur or Babel? [traceur]:
+ok   Verified package.json at package.json
+     Verified config file at config.js
+     Looking up loader files...
+       system.js
+       system.js.map
+       system.src.js
+       es6-module-loader.js.map
+       es6-module-loader.js
+       es6-module-loader.src.js
+
+     Using loader versions:
+       es6-module-loader@0.16.6
+       systemjs@0.16.11
+     Looking up github:jmcriffey/bower-traceur-runtime
+     Looking up github:jmcriffey/bower-traceur
+     Updating registry cache...
+ok   Installed traceur-runtime as github:jmcriffey/bower-traceur-runtime@0.0.88 (0.0.88)
+ok   Installed traceur as github:jmcriffey/bower-traceur@0.0.88 (0.0.88)
+ok   Loader files downloaded successfully
+</code></pre>
+<p>这会在项目根目录下创建一个 <code>config.js</code> 文件，一个 <code>package.json</code> 和一个 <code>jspm_packages</code> 目录。</p>
+<ul>
+<li><strong>config.js</strong>: 各模块的配置，比如要安装的模块，它的可引用的名称与实际位置的映射。</li>
+<li><strong>package.json</strong>: 即 npm 的 package.json，jspm 的依赖都将在这个文件中。</li>
+<li><strong>jspm_packages</strong>: 使用 <code>jspm install</code> 安装的模块都在这个目录下。<code>jspm init</code> 默认会安装 <code>system.js</code>，<code>es6-module-loader.js</code> 和 <code>bower-traceur</code>。</li>
+</ul>
+<h3 id="1-3-basic-usage">1.3 Basic usage</h3>
+<p>新建一个 <code>test</code> 目录，进行 jspm 的初始化：</p>
+<pre><code class="lang-bash">$ mkdir test; cd $_
+$ jspm init
+</code></pre>
+<p>在 <code>test</code> 目录下，创建一个 <code>index.html</code> 文件：</p>
+<pre><code class="lang-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;script src=&quot;jspm_packages/system.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;config.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+      System.import(&#39;./app&#39;);
+    &lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>以及一个 <code>app.js</code>：</p>
+<pre><code class="lang-javascript">console.log(&#39;Hello from future.&#39;)
+</code></pre>
+<p>现在执行 <code>python -m SimpleHTTPServer</code>，打开 <a href="">http://localhost:8000</a>，可以看到浏览器加载了 <code>app.js</code>。</p>
+<p>安装一些依赖模块试试：</p>
+<pre><code class="lang-bash">$ jspm install jquery
+     Updating registry cache...
+     Looking up github:components/jquery
+ok   Installed jquery as github:components/jquery@^2.1.4 (2.1.4)
+ok   Install tree has no forks.
+
+ok   Install complete.
+</code></pre>
+<p>因为 jquery 已经在 jspm 的 registry 中注册了，可以直接这么安装；对于未注册的包，需要这样：<code>jspm install npm:some-other-lib</code>，详细可参考  <a href="https://github.com/jspm/jspm-cli/wiki/Getting-Started">jspm geting started</a>。</p>
+<p>编辑 <code>app.js</code>:</p>
+<pre><code class="lang-javascript">import $ from &#39;jquery&#39;;
+
+console.log($.fn.jquery);
+</code></pre>
+<p>刷新浏览器，页面将会加载 <code>jquery</code>，同时还有 <code>traceur</code>。</p>
+<h2 id="2-write-the-todomvc">2. Write the todomvc</h2>
+<p>我们这个 todomvc 基于 <a href="http://todomvc.com/examples/jquery">todomvc-jquery</a> 编写，所以我们不准备花太多时间讲 todomvc 本身的实现，主要讲一些 ES6 的用法，及如何使用 jspm/SystemJS 管理依赖模块。</p>
+<h3 id="2-1-setup">2.1 Setup</h3>
+<pre><code class="lang-bash">$ mkdir todomvc-jquery-es6; cd $_
+$ jspm init
+</code></pre>
+<h3 id="2-2-create-the-app">2.2 Create the App</h3>
+<h5 id="2-2-1-view">2.2.1 View</h5>
+<p>我们直接使用 <a href="http://todomvc.com/examples/jquery">todomvc-jquery</a> 的 <code>index.html</code> 文件。因为它使用了 <a href="https://github.com/tastejs/todomvc-common">todomvc-common</a> 和 <a href="https://github.com/tastejs/todomvc-app-css">todomvc-common-css</a> 的 css，所以需要安装它们，安装的步骤很简单：</p>
+<pre><code class="lang-bash">$ jspm install npm:todomvc-common npm:todomvc-app-css
+</code></pre>
+<p>之后在 <code>index.html</code> 中引入这两个 css：</p>
+<pre><code class="lang-html">...
+&lt;head&gt;
+...
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;jspm_packages/npm/todomvc-common@1.0.2/base.css&quot;&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;jspm_packages/npm/todomvc-app-css@2.0.1/index.css&quot;&gt;
+&lt;/head&gt;
+...
+</code></pre>
+<h5 id="2-2-2-model-and-controller">2.2.2 Model and Controller</h5>
+<p>在项目的根目录下，创建一个 <code>js</code> 目录，在此目录下新建三个文件：</p>
+<ul>
+<li><strong>app.js</strong>: 这是我们这个 todomvc 的入口文件，在 HTML 中引入它即可；</li>
+<li><strong>todo-app.js</strong>: 这里定义了 App；</li>
+<li><strong>util.js</strong>: 一些 helper 函数。</li>
+</ul>
+<p><a href="http://todomvc.com/examples/jquery">todomvc-jquery</a> 使用 <a href="https://github.com/wycats/handlebars.js">handlebars</a> 做模版引擎，使用 <a href="https://github.com/flatiron/director">director</a> 做客户端路由，所以我们需要安装它们，同时也别忘了安装 jquery：</p>
+<pre><code class="lang-bash">$ jspm install jquery handlebars npm:director
+</code></pre>
+<h6 id="todo-app-js">todo-app.js</h6>
+<pre><code class="lang-javascript">import $ from &#39;jquery&#39;;
+import Handlebars from &#39;handlebars&#39;;
+import director from &#39;director&#39;;
+
+import * as util from &#39;./util&#39;;
+
+const ENTER_KEY = 13;
+const ESCAPE_KEY = 27;
+
+export default class App {
+
+    constructor() {
+        this.todos = util.store(&#39;todos-jquery&#39;);
+        this.cacheElements();
+        this.bindEvents();
+
+        director.Router({
+            &#39;/:filter&#39;: (filter) =&gt; {
+                this.filter = filter;
+                this.render();
+            }
+        }).init(&#39;/all&#39;);
+    }
+
+    ...
+};
+</code></pre>
+<p><code>todo-app.js</code> 后面的内容我们就省略了，它其实就 <code>export</code> 了一个 <code>App</code> class，注意文件开头我们使用了 ES6 的模块引入语法。</p>
+<h6 id="app-js">app.js</h6>
+<pre><code class="lang-javascript">import $ from &#39;jquery&#39;;
+import Handlebars from &#39;handlebars&#39;;
+
+import App from &#39;./todo-app&#39;;
+
+$(()=&gt; {
+
+    Handlebars.registerHelper(&#39;eq&#39;, function(a, b, options) {
+        return a === b ? options.fn(this) : options.inverse(this);
+    });
+
+    new App();
+});
+</code></pre>
+<h3 id="2-3-wrap-it-up">2.3 Wrap it up</h3>
+<p>如前所述，我们直接在<code>index.html</code> 里 <code>import</code> app.js 就行了：</p>
+<pre><code class="lang-html">...
+&lt;script src=&quot;jspm_packages/system.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;config.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+  System.import(&#39;js/app&#39;);
+&lt;/script&gt;
+</code></pre>
+<h3 id="2-4-bundle-for-production">2.4 Bundle for production</h3>
+<p>jspm 也提供了 bundle 的功能，只需要执行：</p>
+<pre><code class="lang-bash">jspm bundle-sfx js/app
+</code></pre>
+<p>就可以把所有的依赖打包到 <code>bundle.js</code> 文件中，在 <code>index.html</code> 中引入它就行了：</p>
+<pre><code class="lang-html">...
+&lt;script src=&quot;bundle.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>点击查看<a href="https://github.com/llh911001/todomvc-es6-jspm">完整代码</a>，可以在这里看 <a href="http://hackll.com/todomvc-es6-jspm/">Demo</a>。</p>
+<h2 id="3-reference">3. Reference</h2>
+<ul>
+<li><a href="http://javascriptplayground.com/blog/2014/11/js-modules-jspm-systemjs/">JavaScript Modules and Dependencies with jspm</a></li>
+<li><a href="http://24ways.org/2014/javascript-modules-the-es6-way/">JavaScript Modules the ES6 Way</a></li>
+<li><a href="http://guybedford.com/practical-workflows-for-es6-modules">Practical Workflows for ES6 Modules</a></li>
+</ul>
+</div></div><div class="article-toolbar text-center"><div class="share-button-group"><a href="http://service.weibo.com/share/share.php?ralateUid=2673498793&amp;url=https://www.teambition.com/developer/blog/article%3F_id=55595702b7a484f77345ba96%26p=weibo-share&amp;title=%E3%80%90Todomvc%20with%20ES6%20and%20jspm%E3%80%91jspm%20%E6%98%AF%E4%B8%80%E4%B8%AA%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%8C%E4%BD%BF%E7%94%A8%20SystemJS%20%E8%BF%99%E4%B8%AA%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD%E5%99%A8%E8%BF%9B%E8%A1%8C%E6%A8%A1%E5%9D%97%E7%9A%84%E7%AE%A1%E7%90%86%E3%80%82SystemJS%20%E6%98%AF%E4%B8%80%E4%B8%AA%E6%89%80%E8%B0%93%20universal%20module%20loader%EF%BC%8C%E5%9F%BA%E4%BA%8E%20ES6%20module%20loader%EF%BC%8C%E9%99%A4%E4%BA%86%E8%83%BD%E5%8A%A0%E8%BD%BD%20ES6%20%E6%A8%A1%E5%9D%97%EF%BC%8C%E8%BF%98%E6%94%AF%E6%8C%81%20CommonJS%EF%BC%8CAMD%20%E5%8F%8A%20globals%20%E8%AF%AD%E6%B3%95%E3%80%82&amp;pic=" target="_blank" title="分享到微博" class="btn weibo"><span class="icon icon-weibo"></span></a><a data-toggle="modal" data-target="#modalWechat" title="分享到微信朋友圈" class="btn wechat"><span class="icon icon-wechat"></span></a><a href="https://twitter.com/intent/tweet?text=Todomvc%20with%20ES6%20and%20jspm%20https://www.teambition.com/developer/blog/article%3F_id=55595702b7a484f77345ba96%26p=twitter-share" target="_blank" title="分享到 Twitter" class="btn twitter"><span class="icon icon-twitter"></span></a><a href="http://www.facebook.com/sharer.php?u=https://www.teambition.com/developer/blog/article%3F_id=55595702b7a484f77345ba96%26p=facebook-share&amp;t=Todomvc%20with%20ES6%20and%20jspm" target="_blank" title="分享到 Facebook" class="btn facebook"><span class="icon icon-facebook"></span></a></div></div><div class="tbsite-post-info"><div class="container max730"><div class="infobar clearfix"><span class="author"><span class="avatar img-circle" style="background-image:url('https://dn-site.oss.aliyuncs.com/2014-10/47254328e780164c6c272830ec8d0060b49d0f0f')" ></span><span class="username">李凌豪</span></span><span class="time">2015-05-18</span></div></div></div><div class="switch-nav"><div class="container max730"><div class="clearfix"><a href="../blog.html" class="gray prev"><span class="icon icon-chevron-left"></span>返回 创作随笔</a></div></div></div></div><div class="modal fade modal-wechat" id="modalWechat" tabindex="-1" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span>&times;</span></button><h4 class="modal-title" id="myModalLabel">分享到微信朋友圈</h4></div><div class="modal-body"><div class="qrcode" data-src="https://www.teambition.com/developer/blog/article?_id=55595702b7a484f77345ba96&p=wechat-share" data-desc="jspm 是一个包管理器，使用 SystemJS 这个模块加载器进行模块的管理。SystemJS 是一个所谓 universal module loader，基于 ES6 module loader，除了能加载 ES6 模块，还支持 CommonJS，AMD 及 globals 语法。"></div></div></div></div></div></div><footer class="site-footer hack-webkit-render"><div class="container max1010"><div class="row footer-nav"><div class="col-md-12 clearfix"><ul class="nav-group"><h4>产品</h4><li><a href="../../tour.html" data-gta="event" data-category="out-footer" data-action="product overview">产品概览</a></li><li><a href="../../pricing.html" data-gta="event" data-category="out-footer" data-action="prices">价格</a></li><li><a href="../../apps.html" data-gta="event" data-category="out-footer" data-action="apps">下载</a></li><li><a href="https://bbs.teambition.com" data-gta="event" data-category="out-footer" data-action="community">社区</a></li><li><a href="https://blog.teambition.com/zh/updates" target="_blank" data-gta="event" data-category="out-footer" data-action="updates">最近更新</a></li><li><a href="../../privacy.html" data-gta="event" data-category="out-footer" data-action="privacy">隐私条款</a></li></ul><ul class="nav-group"><h4>公司</h4><li><a href="https://blog.teambition.com/zh/activities" target="_blank" data-gta="event" data-category="out-footer" data-action="news and events">新闻与活动</a></li><li><a href="../../info/team.html" data-gta="event" data-category="out-footer" data-action="team members">团队成员</a></li><li><a href="../../careers.html" target="_blank" data-gta="event" data-category="out-footer" data-action="join us">加入我们</a></li><li><a href="../../info/press.html" data-gta="event" data-category="out-footer" data-action="press release">媒体报道</a></li><li><a href="../../info/partners.html" data-gta="event" data-category="out-footer" data-action="partners">合作伙伴</a></li><li><a href="../../csr.html" data-gta="event" data-category="out-footer" data-action="CSR">公益计划</a></li></ul><ul class="nav-group"><h4>案例</h4><li><a href="../../research/cases.html" data-gta="event" data-category="out-footer" data-action="industry cases">行业案例</a></li><li><a href="../../research/cases/index.html#practices" data-gta="event" data-category="out-footer" data-action="best practice">专题用例</a></li></ul><ul class="nav-group"><h4>开发者</h4><li><a href="../open-source.html" data-gta="event" data-category="out-footer" data-action="open source">开源项目</a></li><li><a href="../open-platform.html" data-gta="event" data-category="out-footer" data-action="developer open-platform">开放平台</a></li><li><a href="../blog.html" data-gta="event" data-category="out-footer" data-action="developer blog">创作随笔</a></li><li><a href="https://help.teambition.com/" data-gta="event" data-category="out-footer" data-action="developer self-test">自助检测</a></li><li><a href="http://status.teambition.net/" data-gta="event" data-category="out-footer" data-action="developer system-status">系统状态</a></li></ul><ul class="nav-group"><h4>联系方式</h4><li><a href="tel:00864000605576">+86 400-060-5576</a><span class="small">周一至周日 8:00 ~ 20:00</span></li><li><a href="mailto:support@teambition.com" data-gta="event" data-category="out-footer" data-action="contact send support email">support@teambition.com</a></li><li><a href="../../info/contactus.html" data-gta="event" data-category="out-footer" data-action="contact us">联系我们</a></li></ul></div></div></div><div class="copyright"><div class="container max1010"><div class="copyandlang text">Copyright © 2013-2016 Teambition<span class="small"><a href="http://www.miitbeian.gov.cn/">沪ICP备11014111号-2</a></span></div><div class="sns-info"><a class="icon icon-wechat"><div class="pop"><label>微信客服</label><p>请扫描二维码</p><div class="qr-wrapper"></div></div></a><a class="icon icon-weibo" href="http://weibo.com/teambition" target="_blank"></a><a class="icon icon-qq"><div class="pop"><label>官方 QQ 群</label><p>群5：475953451</p><p>群6：143032683 (浙江)</p></div></a><a class="icon icon-rss" href="../../../rss.rss" target="_blank"></a><a class="icon icon-dribbble" href="https://dribbble.com/teambition" target="_blank"></a></div></div></div></footer><script id="gta-main" data-google="UA-41231871-1"data-baidu="ec912ecc405ccd050e4cdf452ef4e85a"data-growingio="1b90a59aaa8e4330afbfd547567aa588"></script><script id="global-config" data-env="release"></script><script src="https://dn-st.teambition.net/site/v2.0.0/js/lib.4ec1082b.js"></script><script src="https://dn-st.teambition.net/site/v2.0.0/js/app.00683573.js"></script></body></html>
